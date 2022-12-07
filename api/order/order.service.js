@@ -6,91 +6,91 @@ const ObjectId = require('mongodb').ObjectId;
 async function query(filterBy = { name: '' }) {
     try {
         const criteria = _buildCriteria(filterBy);
-        const collection = await dbService.getCollection('stay');
-        var stays = await collection.find(criteria).toArray();
-        return stays;
+        const collection = await dbService.getCollection('order');
+        var orders = await collection.find(criteria).toArray();
+        return orders;
     } catch (err) {
-        logger.error('cannot find stays', err);
+        logger.error('cannot find orders', err);
         throw err;
     }
 }
 
-async function getById(stayId) {
+async function getById(orderId) {
     try {
-        const collection = await dbService.getCollection('stay');
-        const stay = collection.findOne({ _id: ObjectId(stayId) });
-        return stay;
+        const collection = await dbService.getCollection('order');
+        const order = collection.findOne({ _id: ObjectId(orderId) });
+        return order;
     } catch (err) {
-        logger.error(`while finding stay ${stayId}`, err);
+        logger.error(`while finding order ${orderId}`, err);
         throw err;
     }
 }
 
-async function remove(stayId) {
+async function remove(orderId) {
     try {
-        const collection = await dbService.getCollection('stay');
-        await collection.deleteOne({ _id: ObjectId(stayId) });
-        return stayId;
+        const collection = await dbService.getCollection('order');
+        await collection.deleteOne({ _id: ObjectId(orderId) });
+        return orderId;
     } catch (err) {
-        logger.error(`cannot remove stay ${stayId}`, err);
+        logger.error(`cannot remove order ${orderId}`, err);
         throw err;
     }
 }
 
-async function add(stay) {
+async function add(order) {
     try {
-        const collection = await dbService.getCollection('stay');
-        await collection.insertOne(stay);
-        return stay;
+        const collection = await dbService.getCollection('order');
+        await collection.insertOne(order);
+        return order;
     } catch (err) {
-        logger.error('cannot insert stay', err);
+        logger.error('cannot insert order', err);
         throw err;
     }
 }
 
-async function update(stay) {
+async function update(order) {
     try {
-        const stayToSave = {
-            vendor: stay.vendor,
-            price: stay.price,
+        const orderToSave = {
+            vendor: order.vendor,
+            price: order.price,
         };
-        const collection = await dbService.getCollection('stay');
+        const collection = await dbService.getCollection('order');
         await collection.updateOne(
-            { _id: ObjectId(stay._id) },
-            { $set: stayToSave }
+            { _id: ObjectId(order._id) },
+            { $set: orderToSave }
         );
-        return stay;
+        return order;
     } catch (err) {
-        logger.error(`cannot update stay ${stayId}`, err);
+        logger.error(`cannot update order ${orderId}`, err);
         throw err;
     }
 }
 
-async function addStayMsg(stayId, msg) {
+async function addOrderMsg(orderId, msg) {
     try {
         msg.id = utilService.makeId();
-        const collection = await dbService.getCollection('stay');
+        const collection = await dbService.getCollection('order');
         await collection.updateOne(
-            { _id: ObjectId(stayId) },
+            { _id: ObjectId(orderId) },
             { $push: { msgs: msg } }
         );
         return msg;
     } catch (err) {
-        logger.error(`cannot add stay msg ${stayId}`, err);
+        logger.error(`cannot add order msg ${orderId}`, err);
         throw err;
     }
 }
 
-async function removeStayMsg(stayId, msgId) {
+async function removeOrderMsg(orderId, msgId) {
     try {
-        const collection = await dbService.getCollection('stay');
+        const collection = await dbService.getCollection('order');
         await collection.updateOne(
-            { _id: ObjectId(stayId) },
+            { _id: ObjectId(orderId) },
             { $pull: { msgs: { id: msgId } } }
         );
         return msgId;
     } catch (err) {
-        logger.error(`cannot add stay msg ${stayId}`, err);
+        logger.error(`cannot add order msg ${orderId}`, err);
         throw err;
     }
 }
@@ -156,6 +156,6 @@ module.exports = {
     getById,
     add,
     update,
-    addStayMsg,
-    removeStayMsg,
+    addOrderMsg,
+    removeOrderMsg,
 };
