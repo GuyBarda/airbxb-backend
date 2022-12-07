@@ -116,14 +116,9 @@ function _buildCriteria({
     }
 
     if (amenities && amenities.length) {
-        // criteria.amenities = { $in: amenities.split(',') };
-        // const amenitiesCrit = amenities.split(',').map((a) => ({
-        //     amenities: { $elemMatch: { title: a } },
-        // }));
-        // criteria.$and = amenitiesCrit;
-        // criteria.amenities = {$or: amenities.split(',').map((a) => ({
-        //         amenities: { $elemMatch: { title: a } },
-        //     }))}
+        criteria.amenities = {
+            $in: amenities.split(',').map((a) => new RegExp(a, 'ig')),
+        };
     }
 
     if (roomTypes && roomTypes.length) {
@@ -138,8 +133,7 @@ function _buildCriteria({
     }
 
     if (country) {
-        criteria.loc = {};
-        criteria.loc.country = { $regex: country, $options: 'i' };
+        criteria.loc = { $exists: country };
     }
 
     if (guests) {

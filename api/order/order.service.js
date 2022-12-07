@@ -97,7 +97,7 @@ async function removeOrderMsg(orderId, msgId) {
 
 function _buildCriteria({ userId, hostId }) {
     const criteria = {};
-
+    console.log(userId);
     if (userId) {
         criteria.name = { $regex: name, $options: 'i' };
     }
