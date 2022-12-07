@@ -5,9 +5,7 @@ const logger = require('../../services/logger.service.js');
 async function getStays(req, res) {
     try {
         logger.debug('Getting Stays');
-        const filterBy = {
-            txt: req.query.txt || '',
-        };
+        const filterBy = req.query;
         const stays = await stayService.query(filterBy);
         res.json(stays);
     } catch (err) {
