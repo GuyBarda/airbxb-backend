@@ -101,7 +101,7 @@ async function add(user) {
             fullname: user.fullname,
             imgUrl: user.imgUrl,
             wishlist: [],
-            trips: [],
+            // trips: [],
             stays: [],
         };
         const collection = await dbService.getCollection('user');
