@@ -3,7 +3,7 @@ const logger = require('../../services/logger.service');
 const utilService = require('../../services/util.service');
 const ObjectId = require('mongodb').ObjectId;
 
-async function query(filterBy = { name: '' }) {
+async function query(filterBy = { userId: '' }) {
     try {
         const criteria = _buildCriteria(filterBy);
         const collection = await dbService.getCollection('order');
@@ -95,55 +95,15 @@ async function removeOrderMsg(orderId, msgId) {
     }
 }
 
-function _buildCriteria({
-    name,
-    types,
-    amenities,
-    roomTypes,
-    maxPrice,
-    minPrice,
-    country,
-    guests,
-}) {
+function _buildCriteria({ userId, hostId }) {
     const criteria = {};
 
-    if (name) {
+    if (userId) {
         criteria.name = { $regex: name, $options: 'i' };
     }
 
-    if (types && types.length) {
-        criteria.type = { $in: types.split(',') };
-    }
-
-    if (amenities && amenities.length) {
-        // criteria.amenities = { $in: amenities.split(',') };
-        // const amenitiesCrit = amenities.split(',').map((a) => ({
-        //     amenities: { $elemMatch: { title: a } },
-        // }));
-        // criteria.$and = amenitiesCrit;
-        // criteria.amenities = {$or: amenities.split(',').map((a) => ({
-        //         amenities: { $elemMatch: { title: a } },
-        //     }))}
-    }
-
-    if (roomTypes && roomTypes.length) {
-        const roomTypesCrit = roomTypes.map((type) => ({
-            roomTypes: { $elemMatch: { title: type } },
-        }));
-        criteria.$and = roomTypesCrit;
-    }
-
-    if (maxPrice || minPrice) {
-        criteria.price = { $gte: +minPrice || 0, $lte: +maxPrice || Infinity };
-    }
-
-    if (country) {
-        criteria.loc = {};
-        criteria.loc.country = { $regex: country, $options: 'i' };
-    }
-
-    if (guests) {
-        criteria.capacity = { $gte: +guests };
+    if (hostId) {
+        criteria.hostId = hostId;
     }
 
     console.log(criteria);
