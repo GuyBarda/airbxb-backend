@@ -77,6 +77,8 @@ async function update(user) {
         // peek only updatable properties
         const userToSave = {
             _id: ObjectId(user._id), // needed for the returnd obj
+            username: user.username,
+            imgUrl: user.imgUrl,
             fullname: user.fullname,
             wishlist: user.wishlist,
             stays: user.stays,
