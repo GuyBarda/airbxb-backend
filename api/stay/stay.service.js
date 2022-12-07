@@ -104,6 +104,10 @@ function _buildCriteria({
     minPrice,
     country,
     guests,
+    propertyTypes,
+    bathrooms,
+    bedrooms,
+    beds,
 }) {
     const criteria = {};
 
@@ -122,10 +126,7 @@ function _buildCriteria({
     }
 
     if (roomTypes && roomTypes.length) {
-        const roomTypesCrit = roomTypes.map((type) => ({
-            roomTypes: { $elemMatch: { title: type } },
-        }));
-        criteria.$and = roomTypesCrit;
+        criteria.roomType = { $in: roomTypes.split(',') };
     }
 
     if (maxPrice || minPrice) {
@@ -136,11 +137,26 @@ function _buildCriteria({
         criteria.loc = { $exists: country };
     }
 
+    if (propertyTypes) {
+        criteria.propertyType = { $in: propertyTypes.split(',') };
+    }
+
     if (guests) {
         criteria.capacity = { $gte: +guests };
     }
 
-    console.log(criteria);
+    if (bathrooms) {
+        criteria.bathrooms = { $gte: +bathrooms };
+    }
+
+    if (bedrooms) {
+        criteria.bedrooms = { $gte: +bedrooms };
+    }
+
+    if (beds) {
+        criteria.beds = { $gte: +beds };
+    }
+
     return criteria;
 }
 
