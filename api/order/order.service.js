@@ -95,11 +95,13 @@ async function removeOrderMsg(orderId, msgId) {
     }
 }
 
-function _buildCriteria({ userId, hostId }) {
+function _buildCriteria(filterBy) {
     const criteria = {};
-    console.log(userId);
-    if (userId) {
-        criteria.name = { $regex: name, $options: 'i' };
+    const { buyerId, hostId } = filterBy;
+
+    if (buyerId) {
+        criteria.buyer = { _id: buyerId };
+        // criteria.buyer._id = buyerId;
     }
 
     if (hostId) {
