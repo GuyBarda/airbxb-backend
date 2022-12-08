@@ -99,14 +99,14 @@ function _buildCriteria(filterBy) {
     const criteria = {};
     const { buyerId, hostId } = filterBy;
 
-    if (buyerId) {
-        criteria.buyer = { _id: buyerId };
-        // criteria.buyer._id = buyerId;
-    }
+    // if (buyerId) {
+    //     criteria.buyer = { _id: buyerId };
+    //     // criteria.buyer._id = buyerId;
+    // }
 
-    if (hostId) {
-        criteria.hostId = hostId;
-    }
+    // if (hostId) {
+    //     criteria.hostId = hostId;
+    // }
 
     console.log(criteria);
     return criteria;
