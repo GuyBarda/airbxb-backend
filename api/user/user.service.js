@@ -44,7 +44,7 @@ async function getById(userId) {
             delete review.byUser;
             return review;
         });
-
+console.log('user', user)
         return user;
     } catch (err) {
         logger.error(`while finding user by id: ${userId}`, err);
