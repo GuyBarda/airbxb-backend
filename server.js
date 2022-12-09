@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     const corsOptions = {
         origin: [
+            'http://localhost:5174',
             'http://127.0.0.1:5173',
             'http://localhost:5173',
             'http://localhost:3030',
@@ -37,10 +38,10 @@ const { setupSocketAPI } = require('./services/socket.service');
 const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware');
 app.all('*', setupAsyncLocalStorage);
 
+app.use('/api/stay', stayRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/review', reviewRoutes);
-app.use('/api/stay', stayRoutes);
 app.use('/api/order', orderRoutes);
 setupSocketAPI(http);
 
