@@ -134,7 +134,7 @@ function _buildCriteria({
     }
 
     if (country) {
-        criteria.loc = { $exists: country };
+        criteria['loc.country'] = { $regex: country, $options: 'i' };
     }
 
     if (propertyTypes) {
