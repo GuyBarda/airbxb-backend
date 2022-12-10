@@ -102,7 +102,7 @@ function _buildCriteria({
     roomTypes,
     maxPrice,
     minPrice,
-    country,
+    destination,
     guests,
     propertyTypes,
     bathrooms,
@@ -133,8 +133,8 @@ function _buildCriteria({
         criteria.price = { $gte: +minPrice || 0, $lte: +maxPrice || Infinity };
     }
 
-    if (country) {
-        criteria['loc.country'] = { $regex: country, $options: 'i' };
+    if (destination) {
+        criteria['loc.country'] = { $regex: destination, $options: 'i' };
     }
 
     if (propertyTypes) {
@@ -156,7 +156,6 @@ function _buildCriteria({
     if (beds) {
         criteria.beds = { $gte: +beds };
     }
-
     return criteria;
 }
 
