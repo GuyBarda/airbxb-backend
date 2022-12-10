@@ -110,6 +110,22 @@ function _buildCriteria({
     beds,
 }) {
     const criteria = {};
+    console.log(
+        'name',
+        name,
+        'type',
+        type,
+        amenities,
+        roomTypes,
+        maxPrice,
+        minPrice,
+        destination,
+        guests,
+        propertyTypes,
+        bathrooms,
+        bedrooms,
+        beds
+    );
 
     if (name) {
         criteria.name = { $regex: name, $options: 'i' };
