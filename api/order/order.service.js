@@ -51,8 +51,7 @@ async function add(order) {
 async function update(order) {
     try {
         const orderToSave = {
-            vendor: order.vendor,
-            price: order.price,
+            status: order.status,
         };
         const collection = await dbService.getCollection('order');
         await collection.updateOne(
