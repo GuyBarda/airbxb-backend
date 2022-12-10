@@ -1,4 +1,5 @@
 const stayService = require('./stay.service.js');
+const socketService = require('../../services/socket.service');
 
 const logger = require('../../services/logger.service.js');
 
@@ -30,8 +31,15 @@ async function addStay(req, res) {
 
     try {
         const stay = req.body;
-        stay.owner = loggedinUser;
+        // stay.owner = loggedinUser;
         const addedStay = await stayService.add(stay);
+
+        // socketService.broadcast({
+        //     type: 'stay-added',
+        //     data: stay,
+        //     userId: loggedinUser._id,
+        // });
+        // socketService.emitToUser({type: 'review-about-you', data: review, userId: review.aboutUser._id})
         res.json(addedStay);
     } catch (err) {
         logger.error('Failed to add stay', err);
