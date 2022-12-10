@@ -97,7 +97,7 @@ async function removeStayMsg(stayId, msgId) {
 
 function _buildCriteria({
     name,
-    types,
+    type,
     amenities,
     roomTypes,
     maxPrice,
@@ -115,8 +115,8 @@ function _buildCriteria({
         criteria.name = { $regex: name, $options: 'i' };
     }
 
-    if (types && types.length) {
-        criteria.type = { $in: types.split(',') };
+    if (type) {
+        criteria.type = { $regex: type, $options: 'i' };
     }
 
     if (amenities && amenities.length) {
