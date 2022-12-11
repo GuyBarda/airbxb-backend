@@ -50,15 +50,14 @@ async function add(stay) {
 
 async function update(stay) {
     try {
-        const stayToSave = {
-            vendor: stay.vendor,
-            price: stay.price,
-        };
+        const stayToSave = JSON.parse(JSON.stringify(stay))
+        delete stayToSave._id
         const collection = await dbService.getCollection('stay');
+
         await collection.updateOne(
             { _id: ObjectId(stay._id) },
             { $set: stayToSave }
-        );
+            );
         return stay;
     } catch (err) {
         logger.error(`cannot update stay ${stayId}`, err);
@@ -110,7 +109,12 @@ function _buildCriteria({
     beds,
 }) {
     const criteria = {};
-
+    console.log(
+        name,
+        type,
+        amenities,
+        destination
+    );
     if (name) {
         criteria.name = { $regex: name, $options: 'i' };
     }
