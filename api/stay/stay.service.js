@@ -50,11 +50,10 @@ async function add(stay) {
 
 async function update(stay) {
     try {
-        const stayToSave = {
-            vendor: stay.vendor,
-            price: stay.price,
-        };
+        const stayToSave = JSON.parse(JSON.stringify(stay));
+        delete stayToSave._id;
         const collection = await dbService.getCollection('stay');
+
         await collection.updateOne(
             { _id: ObjectId(stay._id) },
             { $set: stayToSave }
@@ -137,8 +136,8 @@ function _buildCriteria({
         criteria['loc.country'] = { $regex: destination, $options: 'i' };
     }
 
-    if (propertyTypes) {
-        criteria.propertyType = { $in: propertyTypes.split(',') };
+    if (propertyTypes && propertyTypes.length) {
+        criteria.proprtyType = { $in: propertyTypes.split(',') };
     }
 
     if (guests) {
@@ -156,6 +155,7 @@ function _buildCriteria({
     if (beds) {
         criteria.beds = { $gte: +beds };
     }
+    console.log(criteria);
     return criteria;
 }
 
