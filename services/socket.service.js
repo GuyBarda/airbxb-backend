@@ -8,11 +8,13 @@ function setupSocketAPI(http) {
             origin: '*',
         }
     })
+
     gIo.on('connection', socket => {
         logger.info(`New connected socket [id: ${socket.id}]`)
         socket.on('disconnect', socket => {
             logger.info(`Socket disconnected [id: ${socket.id}]`)
         })
+
         socket.on('chat-set-topic', topic => {
             if (socket.myTopic === topic) return
             if (socket.myTopic) {
@@ -22,6 +24,7 @@ function setupSocketAPI(http) {
             socket.join(topic)
             socket.myTopic = topic
         })
+
         socket.on('chat-send-msg', msg => {
             logger.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
             // emits to all sockets:
@@ -29,15 +32,19 @@ function setupSocketAPI(http) {
             // emits only to sockets in the same room
             gIo.to(socket.myTopic).emit('chat-add-msg', msg)
         })
+
         socket.on('user-watch', userId => {
             logger.info(`user-watch from socket [id: ${socket.id}], on user ${userId}`)
             socket.join('watching:' + userId)
             
         })
+
         socket.on('set-user-socket', userId => {
             logger.info(`Setting socket.userId = ${userId} for socket [id: ${socket.id}]`)
             socket.userId = userId
         })
+        
+        
         socket.on('unset-user-socket', () => {
             logger.info(`Removing socket.userId for socket [id: ${socket.id}]`)
             delete socket.userId
