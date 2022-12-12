@@ -3,7 +3,6 @@ const logger = require('../services/logger.service');
 const config = require('../config');
 
 function requireAuth(req, res, next) {
-    console.log('im in ');
     if (config.isGuestMode && !req?.cookies?.loginToken) {
         req.loggedinUser = { _id: '', fullname: 'Guest' };
         return next();
@@ -13,7 +12,6 @@ function requireAuth(req, res, next) {
         return res.status(401).send('Not Authenticated');
 
     const loggedinUser = authService.validateToken(req.cookies.loginToken);
-    console.log(loggedinUser);
     if (!loggedinUser) return res.status(401).send('Not Authenticated');
     req.loggedinUser = loggedinUser;
     next();

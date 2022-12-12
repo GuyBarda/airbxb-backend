@@ -56,7 +56,7 @@ async function update(order) {
         const collection = await dbService.getCollection('order');
         await collection.updateOne(
             { _id: ObjectId(order._id) },
-            { $set: { 'array.-1': orderToSave } }
+            { $set: orderToSave }
         );
         return order;
     } catch (err) {
