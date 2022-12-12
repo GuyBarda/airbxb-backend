@@ -48,7 +48,6 @@ async function updateOrder(req, res) {
         const order = req.body;
         const updatedOrder = await orderService.update(order);
         socketService.emitToUser({type: 'order-updated', data: order, userId: order.buyer._id})
-
         res.json(updatedOrder);
     } catch (err) {
         logger.error('Failed to update order', err);
