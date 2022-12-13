@@ -39,6 +39,11 @@ async function addOrder(req, res) {
             data: order,
             userId: order.hostId,
         });
+        socketService.emitToUser({
+            type: 'new-order',
+            data: order,
+            userId: order.hostId,
+        });
 
         const addedOrder = await orderService.add(order);
         res.json(addedOrder);
@@ -54,6 +59,11 @@ async function updateOrder(req, res) {
         const updatedOrder = await orderService.update(order);
         socketService.emitToUser({
             type: 'order-updated',
+            data: order,
+            userId: order.buyer._id,
+        });
+        socketService.emitToUser({
+            type: 'trip-about-you',
             data: order,
             userId: order.buyer._id,
         });
