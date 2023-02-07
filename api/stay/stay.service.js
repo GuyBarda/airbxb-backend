@@ -6,9 +6,17 @@ const ObjectId = require('mongodb').ObjectId;
 async function query(filterBy = { name: '' }) {
     try {
         const criteria = _buildCriteria(filterBy);
+        const page = filterBy.page || 0;
+        const stayPerPage = 10;
         const collection = await dbService.getCollection('stay');
-        var stays = await collection.find(criteria).toArray();
-        return stays;
+        const stays = await collection
+            .find(criteria)
+            .skip(page * stayPerPage)
+            .limit(stayPerPage)
+            .toArray();
+
+        const length = await collection.countDocuments(criteria);
+        return { stays, length };
     } catch (err) {
         logger.error('cannot find stays', err);
         throw err;
@@ -107,6 +115,7 @@ function _buildCriteria({
     bathrooms,
     bedrooms,
     beds,
+    page,
 }) {
     const criteria = {};
 
@@ -155,7 +164,7 @@ function _buildCriteria({
     if (beds) {
         criteria.beds = { $gte: +beds };
     }
-    console.log(criteria);
+
     return criteria;
 }
 
