@@ -168,6 +168,7 @@ function _buildCriteria({
     return criteria;
 }
 
+
 module.exports = {
     remove,
     query,

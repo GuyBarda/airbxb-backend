@@ -99,6 +99,7 @@ async function removeStayMsg(req, res) {
     }
 }
 
+
 module.exports = {
     getStays,
     getStayById,
