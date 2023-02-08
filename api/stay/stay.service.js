@@ -7,7 +7,7 @@ async function query(filterBy = { name: '' }) {
     try {
         const criteria = _buildCriteria(filterBy);
         const page = filterBy.page || 0;
-        const stayPerPage = 10;
+        const stayPerPage = 38;
         const collection = await dbService.getCollection('stay');
         const stays = await collection
             .find(criteria)
