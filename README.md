@@ -13,7 +13,7 @@ This full-stack application is a clone of Airbnb built in 10 days as part of Cod
 
 ## Our Stack
 
-- Vue
+- Vue + Vite
 - Vuex
 - SCSS
 - MongoDB
