@@ -4,12 +4,11 @@ This full-stack application is a clone of Airbnb built in 10 days as part of Cod
 
 ## Features
 
-- Search for listings by location
-- List and manage properties
-- Book stays
-- Manage bookings
+- Search for houses by country, dates and capacity
+- Filter by price, amenities, house's type and more...
+- reserve a house
+- Manage bookings and dashboard including: trips, orders, wishlist and "My Houses"
 - Login/Registration
-- Payment processing
 
 ## Our Stack
 
