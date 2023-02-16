@@ -9,6 +9,7 @@ This full-stack application is a clone of Airbnb built in 10 days as part of Cod
 - reserve a house
 - Manage bookings and dashboard including: trips, orders, wishlist and "My Houses"
 - Login/Registration
+- 100% accurate design and responsiveness
 
 ## Our Stack
 
